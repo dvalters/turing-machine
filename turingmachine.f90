@@ -6,10 +6,10 @@ module class_MachineTape
   implicit none
 
   type, public :: MachineTape
-    integer, dimension (:) :: tape
+    integer, allocatable :: tape(:)
     integer :: tape_position
     character(len=1) :: blank_char
-    character(len=:) :: initial_string
+    character(len=128) :: initial_string
   ! define out type-bound procedures
     contains
       procedure :: init => tape_init
@@ -29,7 +29,7 @@ module class_MachineTape
 
      subroutine tape_reinit(this)
        class(MachineTape), intent(in) :: this
-     end subroutine tape_init
+     end subroutine tape_reinit
 
      subroutine tape_move(this)
        class(MachineTape), intent(in) :: this
@@ -56,10 +56,9 @@ end module class_MachineTape
 
 module class_TuringMachine
 
-  implicit none
-
   !get the types and procedures
   use class_MachineTape
+  implicit none
 
   type, public :: TuringMachine
     character(len=1) :: blank_char
@@ -75,25 +74,26 @@ module class_TuringMachine
       procedure :: execute => machine_execute
   end type TuringMachine
 
-  subroutine machine_init(this)
-    class(TuringMachine), intent(in) :: this
-  end subroutine machine_init
+  contains
+    subroutine machine_init(this)
+      class(TuringMachine), intent(in) :: this
+    end subroutine machine_init
 
-  subroutine machine_reinit(this)
-    class(TuringMachine), intent(in) :: this
-  end subroutine machine_reinit
+    subroutine machine_reinit(this)
+      class(TuringMachine), intent(in) :: this
+    end subroutine machine_reinit
 
-  subroutine machine_addtransition(this)
-    class(TuringMachine), intent(in) :: this
-  end subroutine machine_addtransition
+    subroutine machine_addtransition(this)
+      class(TuringMachine), intent(in) :: this
+    end subroutine machine_addtransition
 
-  subroutine machine_step(this)
-    class(TuringMachine), intent(in) :: this
-  end subroutine machine_step
+    subroutine machine_step(this)
+      class(TuringMachine), intent(in) :: this
+    end subroutine machine_step
 
-  subroutine machine_execute(this)
-    class(TuringMachine), intent(in) :: this
-  end subroutine machine_execute
+    subroutine machine_execute(this)
+      class(TuringMachine), intent(in) :: this
+    end subroutine machine_execute
 
 end module class_TuringMachine
 
